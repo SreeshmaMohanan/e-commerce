@@ -4,9 +4,15 @@ import { Row,Col,Button ,Card} from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { removeFromWishlist } from '../redux/slices/wishlistSlice'
+import { addToCart } from '../redux/slices/cartSlice'
 function Wishlist() {
   const wishlistArray=useSelector((state)=>state.wishlistReducer)
   const dispatch=useDispatch()
+  const handleWhishlistCart=(product)=>{
+    dispatch(addToCart(product))
+    dispatch(removeFromWishlist(product._id))
+
+  }
   return (
     <div style={{marginTop:'100px'}}>
       <Row className='m-5'>
@@ -25,7 +31,7 @@ function Wishlist() {
 
       <div className='d-flex justify-content-between align-items-center'>
          <Button style={{border:'none',fontSize:'30px'}} onClick={()=>dispatch(removeFromWishlist(product.id))} className='btn btn-light bg-transparent '> <i className='fa-solid fa-trash text-danger' variant></i></Button>
-          <Button style={{border:'none',fontSize:'30px'}}  className='btn btn-light me-3 bg-transparent'> <i class="fa-solid fa-cart-plus text-success" varient></i></Button>
+          <Button style={{border:'none',fontSize:'30px'}} onClick={()=>handleWhishlistCart(product)}  className='btn btn-light me-3 bg-transparent'> <i class="fa-solid fa-cart-plus text-success" varient></i></Button>
       </div>
       </Card.Body>
     </Card>
